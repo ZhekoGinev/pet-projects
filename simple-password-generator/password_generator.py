@@ -24,7 +24,7 @@ while True:
     if save.lower() in ('y', 'yes'):
         with open('passwords.txt', 'a') as f:
             time = str(datetime.now())[:19]
-            print(f"{time} - size({length}) - {password}\n----------", file=f)
+            print(f"{time} - size({length}) -> {password}\n----------", file=f)
     
     again = ''
     again = input("Do you wish to generate another password? [Y/n]: ")
