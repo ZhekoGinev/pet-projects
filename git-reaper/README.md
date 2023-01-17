@@ -11,7 +11,6 @@ ctrl+s to save, ctrl+x to exit nano
 
 Run the script: ***python git-reaper.py***  
 
-This will delete all branches in the current git repo (in our example zhekoginev/pet-projects  
-that start with "test/"
+This will delete all branches in the current git repo (in our example zhekoginev/pet-projects that start with "test/"
 
 To do this on Windows use \ instead of / in the path and use your IDE / text editor of choice to change the pattern.
