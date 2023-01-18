@@ -9,9 +9,9 @@ def delete_remote_branches(pattern):
     # Iterate through the branches and delete the ones that match the pattern
     for branch in branches:
         if re.search(pattern, branch):
-            branch = branch.replace("origin/", "").strip()
+            branch = branch.replace('origin/', '').strip()
             subprocess.run(['git', 'push', 'origin', '--delete', branch], capture_output=True)
 
             
 # Edit the pattern to match branch name
-delete_remote_branches(r"enter_pattern_here")
+delete_remote_branches(r'enter_pattern_here')
