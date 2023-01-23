@@ -39,7 +39,7 @@ def delete_remote_branches_by_regex(pattern: str):
     # Ask explicitly before deleting
     if to_delete.lower()[0] == "y":
         for br in matches:
-            # subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
+            subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
             print(f"{br} has been deleted")
             deleted += 1
     sleep(1)
@@ -88,7 +88,7 @@ def delete_remote_branches_by_age(years: int):
 
     if to_delete.lower()[0] == "y":
         for br in matches:
-            # subprocess.run(['git', 'push', 'origin', '--delete', br[1]], capture_output=True)
+            subprocess.run(['git', 'push', 'origin', '--delete', br[1]], capture_output=True)
             print(f"{br[1]} has been deleted")
             deleted += 1
     sleep(1)
