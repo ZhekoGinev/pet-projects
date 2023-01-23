@@ -4,7 +4,7 @@ import argparse
 
 
 def delete_remote_branches_by_regex(pattern: str):
-    deleted = 0
+    global deleted
     pattern = rf"{pattern}"
     matches = []
     print(f"Make sure your pattern in correct at https://regex101.com/ using Python!")
@@ -39,7 +39,7 @@ def delete_remote_branches_by_regex(pattern: str):
 
 
 def delete_remote_branches_by_age(years: int):
-    deleted = 0
+    global deleted
     matches = []
 
     # Get a list of remote branches with age and last committer
@@ -81,6 +81,7 @@ def delete_remote_branches_by_age(years: int):
             deleted += 1
 
 
+deleted = 0
 print("\nScanning the repository...\n")
 
 # Get argumens from CLI
