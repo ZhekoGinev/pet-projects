@@ -1,13 +1,14 @@
 import re
 import subprocess
 import argparse
+from time import sleep
 
 
 def delete_remote_branches_by_regex(pattern: str):
     global deleted
     pattern = rf"{pattern}"
     matches = []
-    print(f"Make sure your pattern in correct at https://regex101.com/ using Python!")
+    print(f"\nMake sure your pattern in correct at https://regex101.com/ using Python!")
 
     # Get a list of all remote branches
     all_branches = subprocess.run(
@@ -41,6 +42,7 @@ def delete_remote_branches_by_regex(pattern: str):
             # subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
             print(f"{br} has been deleted")
             deleted += 1
+    sleep(1)
 
 
 def delete_remote_branches_by_age(years: int):
@@ -89,10 +91,18 @@ def delete_remote_branches_by_age(years: int):
             # subprocess.run(['git', 'push', 'origin', '--delete', br[1]], capture_output=True)
             print(f"{br[1]} has been deleted")
             deleted += 1
+    sleep(1)
 
 
 deleted = 0
-print("\nScanning the repository...\n")
+
+print("""
+~~~~~~~~~~~~~~~~~~~~
+~ git-reaper v.1.0 ~
+~~~~~~~~~~~~~~~~~~~~
+""")
+
+print("Scanning the repository...\n")
 
 # Get argumens from CLI
 parser = argparse.ArgumentParser()
@@ -102,7 +112,7 @@ args = parser.parse_args()
 
 if args.age:
     delete_remote_branches_by_age(args.age)
-elif args.pattern:
+if args.pattern:
     delete_remote_branches_by_regex(args.pattern)
 
 print(f"\nExecution finished. Branches deleted: {deleted}")
