@@ -1,6 +1,6 @@
-###Script to clean up branches from a repo based on age of last commit or python regex pattern.  
+### Script to clean up branches from a repo based on age of last commit or python regex pattern.  
 
-###Usage:  
+### Usage:  
 cd into your repo and run the script using one of the 2 optional arguments:  
 --age 42 - when you want to delete branches where the last commit was done 42 years ago or older.  
 --pattern "regex_pattern_here"  
