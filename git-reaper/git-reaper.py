@@ -4,7 +4,7 @@ import argparse
 
 
 def delete_remote_branches_by_regex(pattern: str):
-    global deleted
+    deleted = 0
     pattern = rf"{pattern}"
     matches = []
     print(f"Make sure your pattern in correct at https://regex101.com/ using Python!")
@@ -13,7 +13,7 @@ def delete_remote_branches_by_regex(pattern: str):
     all_branches = subprocess.run(
         ["git", "branch", "-r"], capture_output=True, text=True).stdout.splitlines()
 
-    # Iterate through the branches and get a list of the ones that match the pattern
+    # Iterate through the branches and get a list of branches that match the pattern
     for branch in all_branches:
         if re.search(pattern, branch):
             branch = branch.replace("origin/", "").strip()
@@ -33,30 +33,30 @@ def delete_remote_branches_by_regex(pattern: str):
     # Ask explicitly before deleting
     if to_delete.lower()[0] == "y":
         for br in matches:
-            #subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
+            # subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
             print(f"{br} has been deleted")
             deleted += 1
 
 
 def delete_remote_branches_by_age(years: int):
-    global deleted
+    deleted = 0
     matches = []
 
-    # Get a list of remote branches with age and committer
+    # Get a list of remote branches with age and last committer
     all_branches = subprocess.run(["git", "for-each-ref", "--sort=-committerdate:iso8601",
-                            "--format='%(committerdate:relative)|%(refname:short)|%(committername)'",
-                             "refs/remotes/"], capture_output=True, text=True)
+                                   "--format='%(committerdate:relative)|%(refname:short)|%(committername)'",
+                                   "refs/remotes/"], capture_output=True, text=True)
     all_branches = str(all_branches.stdout).split('\n')
 
-    # Iterate through the branches and append the ones that match the age or older (up to 9)
+    # Iterate through the branches and append the ones that match the age or older (up to 9 years old)
     while years <= 9:
         for branch in all_branches:
             if f"{years} year" in branch:
                 tokens = branch.split("|")
-                age = tokens[0][1:]  # 0
-                branch_name = tokens[1]  # 1
+                age = tokens[0][1:]
+                branch_name = tokens[1]
                 branch_name = branch_name.replace("origin/", "")
-                commiter = tokens[2][:-1]  # 2
+                commiter = tokens[2][:-1]
 
                 matches.append([age, branch_name, commiter])
         years += 1
@@ -76,14 +76,12 @@ def delete_remote_branches_by_age(years: int):
 
     if to_delete.lower()[0] == "y":
         for br in matches:
-            #subprocess.run(['git', 'push', 'origin', '--delete', br[1]], capture_output=True)
+            # subprocess.run(['git', 'push', 'origin', '--delete', br[1]], capture_output=True)
             print(f"{br[1]} has been deleted")
             deleted += 1
 
 
 print("\nScanning the repository...\n")
-
-deleted = 0
 
 # Get argumens from CLI
 parser = argparse.ArgumentParser()
