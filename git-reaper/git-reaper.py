@@ -11,12 +11,12 @@ def delete_remote_branches_by_regex(pattern: str):
 
     # Get a list of all remote branches
     all_branches = subprocess.run(
-        ['git', 'branch', '-r'], capture_output=True, text=True).stdout.splitlines()
+        ["git", "branch", "-r"], capture_output=True, text=True).stdout.splitlines()
 
     # Iterate through the branches and get a list of the ones that match the pattern
     for branch in all_branches:
         if re.search(pattern, branch):
-            branch = branch.replace('origin/', '').strip()
+            branch = branch.replace("origin/", "").strip()
             matches.append(branch)
 
     # Terminate the scrip if there are no matches
