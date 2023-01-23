@@ -25,7 +25,8 @@ def delete_remote_branches_by_regex(pattern: str):
         print("No matches found.")
         return False
 
-    # a simple keep-your-job check
+    # a simple keep-your-job check 
+    # you may have different naming convention than us so change accordingly
     if "HEAD -> develop" in matches:
         matches.remove("HEAD -> develop")
     if "develop" in matches:    
@@ -35,10 +36,10 @@ def delete_remote_branches_by_regex(pattern: str):
     for match in matches:
         print(match)
 
-    to_delete = input("\nAre you sure you want to delete? [y/n]: ")
+    confirm_delete = input("\nAre you sure you want to delete? [y/n]: ")
 
     # Ask explicitly before deleting
-    if to_delete.lower()[0] == "y":
+    if confirm_delete.lower()[0] == "y":
         for br in matches:
             subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
             print(f"{br} has been deleted")
@@ -75,7 +76,6 @@ def delete_remote_branches_by_age(years: int):
         return False
 
     # a simple keep-your-job check
-    # a simple keep-your-job check
     if "HEAD -> develop" in matches:
         matches.remove("HEAD -> develop")
     if "develop" in matches:    
@@ -87,9 +87,9 @@ def delete_remote_branches_by_age(years: int):
         print(f"{match[1]}, commited by {match[2]}, {match[0]}")
 
     # Ask explicitly before deleting
-    to_delete = input("\nAre you sure you want to delete? [y/n]: ")
+    confirm_delete = input("\nAre you sure you want to delete? [y/n]: ")
 
-    if to_delete.lower()[0] == "y":
+    if confirm_delete.lower()[0] == "y":
         for br in matches:
             subprocess.run(['git', 'push', 'origin', '--delete', br[1]], capture_output=True)
             print(f"{br[1]} has been deleted")
@@ -98,12 +98,6 @@ def delete_remote_branches_by_age(years: int):
 
 
 deleted = 0
-
-print("""
-~~~~~~~~~~~~~~~~~~~~
-~ git-reaper v.1.0 ~
-~~~~~~~~~~~~~~~~~~~~
-""")
 
 print("Scanning the repository...\n")
 
