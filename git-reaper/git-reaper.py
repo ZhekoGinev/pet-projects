@@ -24,6 +24,11 @@ def delete_remote_branches_by_regex(pattern: str):
         print("No matches found.")
         return False
 
+    # a simple keep-your-job check
+    if "HEAD -> develop" in matches or "develop" in matches:
+        matches.remove("HEAD -> develop")
+        matches.remove("develop")
+
     print(f"Number of branches found: {len(matches)}\n")
     for match in matches:
         print(match)
@@ -65,6 +70,11 @@ def delete_remote_branches_by_age(years: int):
     if len(matches) == 0:
         print("No matches found.")
         return False
+
+    # a simple keep-your-job check
+    if "HEAD -> develop" in matches or "develop" in matches:
+        matches.remove("HEAD -> develop")
+        matches.remove("develop")
 
     print(f"Number of branches found: {len(matches)}\n")
 
