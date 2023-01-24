@@ -9,4 +9,6 @@ user@host/repo/ #: python3 /path/to/git-reaper.py --age 2
 or  
 user@host/repo/ #: python3 /path/to/git-reaper.py --pattern "deploy-0[0-9]+"  
 or both  
-user@host/repo/ #: python3 /path/to/git-reaper.py --age 2 --pattern "deploy-0[0-9]+"
+user@host/repo/ #: python3 /path/to/git-reaper.py --age 2 --pattern "deploy-0[0-9]+"  
+the last one will show only branches that have both the age and the pattern.  
+
