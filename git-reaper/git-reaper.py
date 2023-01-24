@@ -77,7 +77,7 @@ parser.add_argument("--pattern", dest="pattern", type=str)
 parser.add_argument("--age", dest="age", type=int)
 args = parser.parse_args()
 
-# Get the final list of branches
+# Get the final list of branches based on what arguments were used
 if args.age and args.pattern:
     filtered_branches = get_branch_by_age_and_pattern(args.age, args.pattern)
 
@@ -90,7 +90,7 @@ elif args.pattern:
 # sanity check for the master branch (or whatever the convention is)
 for excluded_br in excluded_branches:
     if excluded_br in filtered_branches:
-        filtered_branches.remove(f"{excluded_br}")
+        filtered_branches.remove(excluded_br)
 
 if filtered_branches:
     print(f"Number of branches found: {len(filtered_branches)}\n")
