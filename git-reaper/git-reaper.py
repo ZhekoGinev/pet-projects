@@ -110,8 +110,8 @@ if filtered_branches:
             # Delete the branch from local
             # subprocess.run(['git', 'branch', '-d', br], capture_output=True)
             print(f"{br} has been deleted from origin.")
-            subprocess.run(['git', 'push', '--tags'], capture_output=True)
             deleted += 1
+        subprocess.run(['git', 'push', '--tags'], capture_output=True)
 else:
     print("\nNo matches found.")
 
