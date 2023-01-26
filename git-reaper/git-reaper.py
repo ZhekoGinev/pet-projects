@@ -98,12 +98,19 @@ if filtered_branches:
         print(branch)
 
     # Ask explicitly before deleting
-    confirm_delete = input("\nAre you sure you want to delete? [y/n]: ")
+    confirm_delete = input("\nAre you sure you want to archive and delete? [y/n]: ")
 
     if confirm_delete.lower()[0] == "y":
         for br in filtered_branches:
-            # subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
-            print(f"{br} has been deleted")
+            # Archive the branch
+            subprocess.run(['git', 'tag', 'archive/{}'.format(br), 'origin/{}'.format(br)], capture_output=True)
+            print(f"Tagged as archive/{br}")
+            # Delete the branch from remote origin
+            subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
+            # Delete the branch from local
+            # subprocess.run(['git', 'branch', '-d', br], capture_output=True)
+            print(f"{br} has been deleted from origin.")
+            subprocess.run(['git', 'push', '--tags'], capture_output=True)
             deleted += 1
 else:
     print("\nNo matches found.")
