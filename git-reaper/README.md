@@ -18,11 +18,11 @@ There are 2 additional parameters you can use --archive and --delete
 
 #### Usage:  
 Scenario 1 - I want to archive and delete all branches older that 2 years that contain "deploy" in the name:  
-clone https://git.repo/test-repo.git
-cd test-repo
+clone https://git.repo/test-repo.git  
+cd test-repo  
 python path/to/git-reaper-auto.py --age 2 pattern "deploy" --archive --delete
 
 Scenario 2 - I want to delete (without archiving) all branches that have not had a commit in 4 years or more:  
-clone https://git.repo/test-repo.git
-cd test-repo
+clone https://git.repo/test-repo.git  
+cd test-repo  
 python path/to/git-reaper-auto.py --age 4 --delete
