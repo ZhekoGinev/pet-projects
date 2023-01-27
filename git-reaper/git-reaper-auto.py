@@ -74,8 +74,8 @@ print("\nScanning the repository...\n")
 parser = argparse.ArgumentParser()
 parser.add_argument("--pattern", dest="pattern", type=str)
 parser.add_argument("--age", dest="age", type=int)
-parser.add_argument("--a", dest="archive", nargs='?', const=1, type=str,)
-parser.add_argument("--d", dest="delete", nargs='?', const=1, type=str)
+parser.add_argument("--archive", dest="archive", nargs='?', const=1, type=str,)
+parser.add_argument("--delete", dest="delete", nargs='?', const=1, type=str)
 args = parser.parse_args()
 
 
