@@ -74,7 +74,10 @@ print("\nScanning the repository...\n")
 parser = argparse.ArgumentParser()
 parser.add_argument("--pattern", dest="pattern", type=str)
 parser.add_argument("--age", dest="age", type=int)
+parser.add_argument("--a", dest="archive", nargs='?', const=1, type=str,)
+parser.add_argument("--d", dest="delete", nargs='?', const=1, type=str)
 args = parser.parse_args()
+
 
 # Get the final list of branches based on what arguments were used
 if args.age and args.pattern:
@@ -96,19 +99,17 @@ if filtered_branches:
     for branch in filtered_branches:
         print(branch)
 
-    # Ask explicitly before deleting
-    confirm_delete = input("\nAre you sure you want to archive and delete? [y/n]: ")
-
-    if confirm_delete.lower()[0] == "y":
-        for br in filtered_branches:
+    for br in filtered_branches:
+        if args.archive:
             # Archive the branch
             subprocess.run(['git', 'tag', 'archive/{}'.format(br), 'origin/{}'.format(br)], capture_output=True)
             print(f"Tagged as archive/{br}")
+        if args.delete:
             # Delete the branch from remote origin
             subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
             print(f"{br} has been deleted from origin.")
             deleted += 1
-        subprocess.run(['git', 'push', '--tags'], capture_output=True)
+    subprocess.run(['git', 'push', '--tags'], capture_output=True)
 else:
     print("\nNo matches found.")
 
