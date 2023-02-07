@@ -62,8 +62,12 @@ def get_branch_by_age_and_pattern(years: int, pattern: str):
     return matches
 
 
+# Set defaults
 deleted = 0
 filtered_branches = []
+confirm_archive = "no"
+confirm_delete = "no"
+
 # Enter the name/s of your main branch so you don't delete it by mistake
 excluded_branches = ["master", "develop", "main",
                      "HEAD -> master", "HEAD -> develop", "HEAD -> main"]
@@ -74,7 +78,11 @@ print("\nScanning the repository...\n")
 parser = argparse.ArgumentParser()
 parser.add_argument("--pattern", dest="pattern", type=str)
 parser.add_argument("--age", dest="age", type=int)
+parser.add_argument("--archive", dest="archive", nargs='?', const=1, type=str,)
+parser.add_argument("--delete", dest="delete", nargs='?', const=1, type=str)
+parser.add_argument("--interactive", dest="interactive", nargs='?', const=1,  type=str)
 args = parser.parse_args()
+
 
 # Get the final list of branches based on what arguments were used
 if args.age and args.pattern:
@@ -96,17 +104,16 @@ if filtered_branches:
     for branch in filtered_branches:
         print(branch)
 
-    # Ask explicitly before deleting
-    confirm_archive = input("\nDo you want to archive [y/n]: ")
-    confirm_delete = input("\nDo you want to delete? [y/n]: ")
+    if args.interactive:
+        confirm_archive = input("\nDo you want to archive [y/n]: ")
+        confirm_delete = input("\nDo you want to delete? [y/n]: ")
 
-    
     for br in filtered_branches:
-        if confirm_archive.lower()[0] == "y":
+        if args.archive or confirm_archive.lower()[0] == "y":
             # Archive the branch
             subprocess.run(['git', 'tag', 'archive/{}'.format(br), 'origin/{}'.format(br)], capture_output=True)
             print(f"Tagged as archive/{br}")
-        if confirm_delete.lower()[0] == "y":
+        if args.delete or confirm_delete.lower()[0] == "y":
             # Delete the branch from remote origin
             subprocess.run(['git', 'push', 'origin', '--delete', br], capture_output=True)
             print(f"{br} has been deleted from origin.")
