@@ -1,3 +1,1 @@
-Upgrade of youtube-dl is required  
-
-pip install --upgrade --force-reinstall "git+https://github.com/ytdl-org/youtube-dl.git"  
+See y2mp3 README for installation and details!
